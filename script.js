@@ -1,3 +1,10 @@
+// Function to toggle between calculators
+function showCalculator(calculatorId) {
+    const calculators = ['pnlCalculator', 'marginCalculator', 'riskCalculator', 'maxLotCalculator'];
+    calculators.forEach(id => {
+        document.getElementById(id).style.display = id === calculatorId ? 'block' : 'none';
+    });
+}
 const instruments = {
     // Crypto
     "ADAUSD": { pipValue: 0.10, conversionRate: 1000, type: "crypto" },
@@ -11,7 +18,7 @@ const instruments = {
     "XMRUSD": { pipValue: 0.10, conversionRate: 10, type: "crypto" },
     "XRPUSD": { pipValue: 0.10, conversionRate: 1000, type: "crypto" },
     
-    // Forex
+    // Forex 
     "AUDCAD": { pipValue: 7.24, conversionRate: 10000, type: "forex" },
     "AUDCHF": { pipValue: 11.09, conversionRate: 10000, type: "forex" },
     "AUDJPY": { pipValue: 6.59, conversionRate: 100, type: "forex" },
@@ -57,6 +64,7 @@ const instruments = {
     "UKOUSD": { pipValue: 1.00, conversionRate: 10, type: "commodity" }
 };
 
+// Existing code for P&L/Pip Calculator
 document.addEventListener("DOMContentLoaded", () => {
     const instrumentList = document.getElementById("instrument-list");
     Object.keys(instruments).forEach(symbol => {
@@ -79,20 +87,55 @@ function calculate() {
     }
 
     const { pipValue, conversionRate, type } = instruments[instrument];
-    const priceDifference = Math.abs(entryPrice - exitPrice)* conversionRate;
+    const priceDifference = Math.abs(entryPrice - exitPrice) * conversionRate;
     const pnl = priceDifference * lot * pipValue;
 
-    let resultLabel;
-    let differenceLabel;
-
-    if ((position === "sell" && exitPrice < entryPrice) || (position === "buy" && exitPrice > entryPrice)) {
-        resultLabel = "Profit: ";
-    } else {
-        resultLabel = "Loss: ";
-    }
-
-    // Determine label based on instrument type
-    differenceLabel = type === "index" ? "Point Difference: " : "Pip Difference: ";
+    let resultLabel = (position === "sell" && exitPrice < entryPrice) || (position === "buy" && exitPrice > entryPrice) ? "Profit:$" : "Loss:$";
+    let differenceLabel = type === "index" ? "Point Difference: " : "Pip Difference: ";
     document.getElementById("pipDifference").textContent = differenceLabel + priceDifference.toFixed(2);
     document.getElementById("profitLoss").textContent = resultLabel + Math.abs(pnl.toFixed(2));
+}
+
+// New Margin Calculator
+function calculateMargin() {
+    const instrument = document.getElementById("marginInstrument").value.toUpperCase();
+    const leverage = parseFloat(document.getElementById("leverage").value);
+    const tradeSize = parseFloat(document.getElementById("tradeSize").value);
+
+    if (!instruments[instrument] || isNaN(leverage) || isNaN(tradeSize)) {
+        alert("Please enter valid values.");
+        return;
+    }
+
+    const { conversionRate } = instruments[instrument];
+    const marginRequired = (tradeSize / leverage) * conversionRate;
+    document.getElementById("marginAmount").textContent = `Required Margin: $${marginRequired.toFixed(2)}`;
+}
+
+// New Risk Calculator
+function calculateRisk() {
+    const accountBalance = parseFloat(document.getElementById("accountBalance").value);
+    const riskPercentage = parseFloat(document.getElementById("riskPercentage").value);
+
+    if (isNaN(accountBalance) || isNaN(riskPercentage)) {
+        alert("Please enter valid values.");
+        return;
+    }
+
+    const riskAmount = accountBalance * (riskPercentage / 100);
+    document.getElementById("riskAmount").textContent = `Risk Amount: $${riskAmount.toFixed(2)}`;
+}
+
+// New Max Lot Calculator
+function calculateMaxLot() {
+    const accountBalance = parseFloat(document.getElementById("maxAccountBalance").value);
+    const leverage = parseFloat(document.getElementById("maxLeverage").value);
+
+    if (isNaN(accountBalance) || isNaN(leverage)) {
+        alert("Please enter valid values.");
+        return;
+    }
+
+    const maxLot = accountBalance * leverage;
+    document.getElementById("maxLotSize").textContent = `Max Lot Size: ${maxLot.toFixed(2)}`;
 }
