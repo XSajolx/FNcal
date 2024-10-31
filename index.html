@@ -3,51 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P&L/Pip Calculator</title>
+    <title>FNmarkets Calculators</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="calculator">
-        <h2>P&L / Pip Calculator</h2>
-        <div class="input-group">
-            <label for="position">Position:</label>
-            <select id="position">
-                <option value="buy">Buy</option>
-                <option value="sell">Sell</option>
-            </select>
-        </div>
-        
-        <div class="input-group">
-            <label for="instrument">Instrument:</label>
-            <input type="text" id="instrument" placeholder="Search Instrument..." list="instrument-list">
-            <datalist id="instrument-list">
-                <!-- Options will be dynamically added here -->
-            </datalist>
+    <!-- Top Navigation Bar -->
+    <div class="topbar">
+        <ul>
+            <li onclick="showCalculator('pnlCalculator')">P&L / Pip Calculator</li>
+            <li onclick="showCalculator('marginCalculator')">Margin Calculator</li>
+            <li onclick="showCalculator('riskCalculator')">Risk Calculator</li>
+            <li onclick="showCalculator('maxLotCalculator')">Max Lot Calculator</li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <!-- P&L / Pip Calculator -->
+        <div class="calculator" id="pnlCalculator">
+            <h2>P&L / Pip Calculator</h2>
+            <div class="input-group">
+                <label for="position">Position:</label>
+                <select id="position">
+                    <option value="buy">Buy</option>
+                    <option value="sell">Sell</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="instrument">Instrument:</label>
+                <input type="text" id="instrument" placeholder="Search Instrument..." list="instrument-list">
+                <datalist id="instrument-list"></datalist>
+            </div>
+            <div class="input-group">
+                <label for="entryPrice">Entry Price:</label>
+                <input type="number" id="entryPrice" step="0.01">
+            </div>
+            <div class="input-group">
+                <label for="exitPrice">Exit Price:</label>
+                <input type="number" id="exitPrice" step="0.01">
+            </div>
+            <div class="input-group">
+                <label for="lot">Lot:</label>
+                <input type="number" id="lot" step="0.01">
+            </div>
+            <button onclick="calculate()">Calculate</button>
+            <div id="result">
+                <p><span id="pipDifference"></span></p>
+                <p><span id="profitLoss"></span></p>
+            </div>
         </div>
 
-        <div class="input-group">
-            <label for="entryPrice">Entry Price:</label>
-            <input type="number" id="entryPrice" step="0.01">
+        <!-- Margin Calculator -->
+        <div class="calculator" id="marginCalculator" style="display: none;">
+            <h2>Margin Calculator</h2>
+            <div class="input-group">
+                <label for="marginInstrument">Instrument:</label>
+                <input type="text" id="marginInstrument" placeholder="Search Instrument..." list="instrument-list">
+            </div>
+            <div class="input-group">
+                <label for="leverage">Leverage:</label>
+                <input type="number" id="leverage" step="0.01">
+            </div>
+            <div class="input-group">
+                <label for="tradeSize">Trade Size:</label>
+                <input type="number" id="tradeSize" step="0.01">
+            </div>
+            <button onclick="calculateMargin()">Calculate Margin</button>
+            <div id="marginResult">
+                <p><span id="marginAmount"></span></p>
+            </div>
         </div>
 
-        <div class="input-group">
-            <label for="exitPrice">Exit Price:</label>
-            <input type="number" id="exitPrice" step="0.01">
+        <!-- Risk Calculator -->
+        <div class="calculator" id="riskCalculator" style="display: none;">
+            <h2>Risk Calculator</h2>
+            <div class="input-group">
+                <label for="accountBalance">Account Balance:</label>
+                <input type="number" id="accountBalance" step="0.01">
+            </div>
+            <div class="input-group">
+                <label for="riskPercentage">Risk Percentage:</label>
+                <input type="number" id="riskPercentage" step="0.01">
+            </div>
+            <button onclick="calculateRisk()">Calculate Risk</button>
+            <div id="riskResult">
+                <p><span id="riskAmount"></span></p>
+            </div>
         </div>
 
-        <div class="input-group">
-            <label for="lot">Lot:</label>
-            <input type="number" id="lot" step="0.01">
-        </div>
-
-        <button onclick="calculate()">Calculate</button>
-
-        <div id="result">
-            <p><span id="pipDifference"></span></p>
-            <p><span id="profitLoss"></span></p>
+        <!-- Max Lot Calculator -->
+        <div class="calculator" id="maxLotCalculator" style="display: none;">
+            <h2>Max Lot Calculator</h2>
+            <div class="input-group">
+                <label for="maxAccountBalance">Account Balance:</label>
+                <input type="number" id="maxAccountBalance" step="0.01">
+            </div>
+            <div class="input-group">
+                <label for="maxLeverage">Leverage:</label>
+                <input type="number" id="maxLeverage" step="0.01">
+            </div>
+            <button onclick="calculateMaxLot()">Calculate Max Lot</button>
+            <div id="maxLotResult">
+                <p><span id="maxLotSize"></span></p>
+            </div>
         </div>
     </div>
 
     <script src="script.js"></script>
-    <link rel="stylesheet" href="style.css">
 </body>
 </html>
