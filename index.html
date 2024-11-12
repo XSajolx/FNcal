@@ -45,8 +45,8 @@
                 <label for="lot">Lot:</label>
                 <input type="number" id="lot" step="0.01">
             </div>
-            <button onclick="calculate()">Calculate</button>
-            <div id="result">
+            <button onclick="calculatePip()">Calculate P&L/Pip</button>
+            <div id="pipResult">
                 <p><span id="pipDifference"></span></p>
                 <p><span id="profitLoss"></span></p>
             </div>
@@ -54,25 +54,27 @@
 
         <!-- Margin Calculator -->
         <div class="calculator" id="marginCalculator" style="display: none;">
-            <h2>Margin Calculator</h2>
-            <div class="input-group">
-                <label for="marginInstrument">Instrument:</label>
-                <input type="text" id="marginInstrument" placeholder="Search Instrument..." list="instrument-list">
-            </div>
-            <div class="input-group">
-                <label for="leverage">Leverage:</label>
-                <input type="number" id="leverage" step="0.01">
-            </div>
-            <div class="input-group">
-                <label for="tradeSize">Trade Size:</label>
-                <input type="number" id="tradeSize" step="0.01">
-            </div>
-            <button onclick="calculateMargin()">Calculate Margin</button>
-            <div id="marginResult">
-                <p><span id="marginAmount"></span></p>
-            </div>
-        </div>
-
+            <label for="marginInstrument">Instrument:</label>
+            <input list="pair-list" id="marginInstrument" placeholder="Select Instrument" autocomplete="off">
+            <datalist id="pair-list">
+                <!-- Options will be populated dynamically by JavaScript -->
+            </datalist>
+            <br>
+        
+            <label for="leverage">Leverage:</label>
+            <input type="number" id="leverage" placeholder="Enter Leverage" step="1" min="1">
+            <br>
+        
+            <label for="lot2">Lot:</label> <!-- Updated id here -->
+            <input type="number" id="lot2" placeholder="Enter Lot Size" step="0.01" min="0.01"> <!-- Changed id to "lot2" -->
+            <br><br>
+        
+            <!-- Button to calculate margin -->
+            <button type="button" onclick="calculateMargin()">Calculate Margin</button>
+        
+            <!-- Display the result -->
+            <p id="marginAmount"></p>
+        </div>        
         <!-- Risk Calculator -->
         <div class="calculator" id="riskCalculator" style="display: none;">
             <h2>Risk Calculator</h2>
@@ -94,20 +96,24 @@
         <div class="calculator" id="maxLotCalculator" style="display: none;">
             <h2>Max Lot Calculator</h2>
             <div class="input-group">
-                <label for="maxAccountBalance">Account Balance:</label>
-                <input type="number" id="maxAccountBalance" step="0.01">
+                <label for="balance">Account Balance:</label>
+                <input type="number" id="balance" name="balance" required>
             </div>
             <div class="input-group">
-                <label for="maxLeverage">Leverage:</label>
-                <input type="number" id="maxLeverage" step="0.01">
+                <label for="leverage">Leverage:</label>
+                <input type="number" id="maxLotLeverage" name="leverage" required>
             </div>
-            <button onclick="calculateMaxLot()">Calculate Max Lot</button>
+            <div class="input-group">
+                <label for="pair">Choose a Pair:</label>
+                <input type="text" id="pair" placeholder="Search for a pair..." list="pair-list">
+                <datalist id="pair-list"></datalist>
+            </div>
+            <button onclick="calculateMaxLot()">Calculate Max Lot Size</button> <!-- Updated function name here -->
             <div id="maxLotResult">
                 <p><span id="maxLotSize"></span></p>
             </div>
         </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+        
+        <script src="script.js"></script>        
+    </body>
+    </html>
