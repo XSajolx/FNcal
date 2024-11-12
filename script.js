@@ -298,4 +298,3 @@ function calculateMaxLot() {
     // Display the converted price and Max Lot Size
     document.getElementById("maxLotSize").textContent = `Converted Price: ${convertedPrice.toFixed(4)}, Max Lot Size: ${maxLotSize.toFixed(4)}`;
 }
-
