@@ -161,7 +161,6 @@ document.addEventListener("DOMContentLoaded", () => {
         instrumentList.appendChild(option);
     });
 });
-
 function calculatePip() {
     const position = document.getElementById("position").value;
     const instrument = document.getElementById("instrument").value.toUpperCase();
@@ -183,7 +182,31 @@ function calculatePip() {
     document.getElementById("pipDifference").textContent = differenceLabel + priceDifference.toFixed(2);
     document.getElementById("profitLoss").textContent = resultLabel + Math.abs(pnl.toFixed(2));
 }
+// Function to update the Sample Price field in the Margin Calculator
+function updateMarginSamplePrice() {
+    const instrument = document.getElementById("marginInstrument").value.toUpperCase();
 
+    // Check if the instrument exists in samplePrices
+    if (samplePrices[instrument]) {
+        const { samplePrice } = samplePrices[instrument];
+        document.getElementById("samplePriceMargin").value = samplePrice.toFixed(4);
+        console.log("Updated Sample Price for Margin:", samplePrice);
+    } else {
+        document.getElementById("samplePriceMargin").value = "N/A";
+        console.warn("Instrument not found in samplePrices for Margin Calculator.");
+    }
+}
+// Populate the instrument list in the datalist for both calculators
+document.addEventListener("DOMContentLoaded", () => {
+    const pairList = document.getElementById("pair-list");
+
+    // Populate options in the datalist for available instruments
+    Object.keys(samplePrices).forEach(symbol => {
+        const option = document.createElement("option");
+        option.value = symbol;
+        pairList.appendChild(option);
+    });
+});
 function calculateMargin() {
     const instrument = document.getElementById("marginInstrument").value.toUpperCase();
     const lotValue = document.getElementById("lot2").value; // Updated to "lot2"
@@ -237,6 +260,33 @@ document.addEventListener("DOMContentLoaded", () => {
         const option = document.createElement("option");
         option.value = symbol;
         instrumentList.appendChild(option);
+    });
+});
+
+// Function to update the Sample Price field in the Risk Calculator
+function updateSamplePrice() {
+    const instrument = document.getElementById("riskInstrument").value.toUpperCase();
+
+    // Check if the instrument exists in samplePrices
+    if (samplePrices[instrument]) {
+        const { samplePrice } = samplePrices[instrument];
+        document.getElementById("samplePriceDisplay").value = samplePrice.toFixed(4);
+        console.log("Updated Sample Price:", samplePrice);
+    } else {
+        document.getElementById("samplePriceDisplay").value = "N/A";
+        console.warn("Instrument not found in samplePrices.");
+    }
+}
+
+// Populate the instrument list
+document.addEventListener("DOMContentLoaded", () => {
+    const pairList = document.getElementById("pair-list");
+
+    // Populate options in the datalist for available instruments
+    Object.keys(samplePrices).forEach(symbol => {
+        const option = document.createElement("option");
+        option.value = symbol;
+        pairList.appendChild(option);
     });
 });
 function calculateRisk() {
