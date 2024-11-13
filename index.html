@@ -55,10 +55,14 @@
         <!-- Margin Calculator -->
         <div class="calculator" id="marginCalculator" style="display: none;">
             <label for="marginInstrument">Instrument:</label>
-            <input list="pair-list" id="marginInstrument" placeholder="Select Instrument" autocomplete="off">
+            <input list="pair-list" id="marginInstrument" placeholder="Select Instrument" autocomplete="off" oninput="updateMarginSamplePrice()">
             <datalist id="pair-list">
                 <!-- Options will be populated dynamically by JavaScript -->
             </datalist>
+            <br>
+        
+            <label for="samplePriceMargin">Sample Price:</label>
+            <input type="text" id="samplePriceMargin" placeholder="Sample Price" readonly>
             <br>
         
             <label for="leverage">Leverage:</label>
@@ -74,8 +78,9 @@
         
             <!-- Display the result -->
             <p id="marginAmount"></p>
-        </div>        
+        </div>                
         <!-- Risk Calculator -->
+<!-- Risk Calculator -->
 <!-- Risk Calculator -->
 <div class="calculator" id="riskCalculator" style="display: none;">
     <label for="position">Position:</label>
@@ -90,10 +95,14 @@
     <br>
 
     <label for="riskInstrument">Trading Instrument:</label>
-    <input list="pair-list" id="riskInstrument" placeholder="Select Instrument">
+    <input list="pair-list" id="riskInstrument" placeholder="Select Instrument" oninput="updateSamplePrice()">
     <datalist id="pair-list">
-        <!-- Options will be populated dynamically via JavaScript -->
+        <!-- Options will be populated dynamically -->
     </datalist>
+    <br>
+
+    <label for="samplePriceDisplay">Sample Price:</label>
+    <input type="text" id="samplePriceDisplay" placeholder="Sample Price" readonly>
     <br>
 
     <label for="desiredProfit">Desired Profit:</label>
@@ -101,7 +110,7 @@
     <br>
 
     <label for="entryPrice1">Entry Price:</label>
-    <input type="number" id="entryPrice1" placeholder="Enter Entry Price" step="0.0001" min="0.0001">
+    <input type="number" id="entryPrice1" placeholder="Enter Entry Price" step="0.01" min="0.01">
     <br>
 
     <label for="lotSize">Lot Size:</label>
@@ -111,7 +120,7 @@
     <!-- Button to calculate SL and TP -->
     <button onclick="calculateRisk()">Calculate SL and TP</button>
 
-    <!-- Display the results -->
+    <!-- Display the result -->
     <p id="slAmount"></p>
     <p id="tpAmount"></p>
 </div>
