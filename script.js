@@ -239,32 +239,56 @@ document.addEventListener("DOMContentLoaded", () => {
         instrumentList.appendChild(option);
     });
 });
-// New Risk Calculator
 function calculateRisk() {
-    const accountBalance = parseFloat(document.getElementById("accountBalance").value);
-    const riskPercentage = parseFloat(document.getElementById("riskPercentage").value);
+    const position = document.getElementById("position").value;
+    const riskAmountValue = document.getElementById("riskAmount").value;
+    const instrument = document.getElementById("riskInstrument").value.toUpperCase();
+    const desiredProfitValue = document.getElementById("desiredProfit").value;
+    const entryPriceValue = document.getElementById("entryPrice1").value;
+    const lotSizeValue = document.getElementById("lotSize").value;
 
-    if (isNaN(accountBalance) || isNaN(riskPercentage)) {
-        alert("Please enter valid values.");
+    // Parse inputs
+    const riskAmount = parseFloat(riskAmountValue);
+    const desiredProfit = parseFloat(desiredProfitValue);
+    const entryPrice = parseFloat(entryPriceValue);
+    const lotSize = parseFloat(lotSizeValue);
+
+    // Log inputs for debugging
+    console.log("Position:", position);
+    console.log("Risk Amount:", riskAmount);
+    console.log("Instrument:", instrument);
+    console.log("Desired Profit:", desiredProfit);
+    console.log("Entry Price:", entryPrice);
+    console.log("Lot Size:", lotSize);
+
+    // Validate inputs
+    if (!instruments[instrument] || isNaN(riskAmount) || isNaN(desiredProfit) || isNaN(entryPrice) || isNaN(lotSize)) {
+        document.getElementById("slAmount").textContent = "Invalid input. Please check all fields.";
+        document.getElementById("tpAmount").textContent = "";
+        console.warn("One or more fields are invalid.");
         return;
     }
 
-    const riskAmount = accountBalance * (riskPercentage / 100);
-    document.getElementById("riskAmount").textContent = `Risk Amount: $${riskAmount.toFixed(2)}`;
+    // Determine if the instrument is an index and get the conversion rate
+    const isIndex = instruments[instrument].type === "index";
+    const conversionRate = instruments[instrument].conversionRate;
+    const divisor = isIndex ? 10 : 100;
+
+    // Calculate SL and TP based on the position and instrument type
+    let stopLoss, takeProfit;
+
+    if (position === "buy") {
+        stopLoss = entryPrice - (riskAmount / (lotSize * divisor * conversionRate));
+        takeProfit = entryPrice + (desiredProfit / (lotSize * divisor * conversionRate));
+    } else if (position === "sell") {
+        stopLoss = entryPrice + (riskAmount / (lotSize * divisor * conversionRate));
+        takeProfit = entryPrice - (desiredProfit / (lotSize * divisor * conversionRate));
+    }
+
+    // Display results
+    document.getElementById("slAmount").textContent = `Stop Loss (SL): ${stopLoss.toFixed(4)}`;
+    document.getElementById("tpAmount").textContent = `Take Profit (TP): ${takeProfit.toFixed(4)}`;
 }
-  // Populate the pair-list datalist with pairs from samplePrices on page load
-document.addEventListener("DOMContentLoaded", () => {
-    const pairList = document.getElementById("pair-list");
-
-    // Iterate over samplePrices keys and add each as an option in the datalist
-    Object.keys(samplePrices).forEach(pair => {
-        const option = document.createElement("option");
-        option.value = pair;  // Set the value of the option to the pair name
-        pairList.appendChild(option);
-    });
-});
-
-  
 const exceptionPairs = ["CADCHF", "CADJPY", "CHFJPY", "MXNJPY", "NOKJPY"];
 
 function calculateMaxLot() {
