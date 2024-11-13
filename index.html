@@ -76,22 +76,45 @@
             <p id="marginAmount"></p>
         </div>        
         <!-- Risk Calculator -->
-        <div class="calculator" id="riskCalculator" style="display: none;">
-            <h2>Risk Calculator</h2>
-            <div class="input-group">
-                <label for="accountBalance">Account Balance:</label>
-                <input type="number" id="accountBalance" step="0.01">
-            </div>
-            <div class="input-group">
-                <label for="riskPercentage">Risk Percentage:</label>
-                <input type="number" id="riskPercentage" step="0.01">
-            </div>
-            <button onclick="calculateRisk()">Calculate Risk</button>
-            <div id="riskResult">
-                <p><span id="riskAmount"></span></p>
-            </div>
-        </div>
+<!-- Risk Calculator -->
+<div class="calculator" id="riskCalculator" style="display: none;">
+    <label for="position">Position:</label>
+    <select id="position">
+        <option value="buy">Buy</option>
+        <option value="sell">Sell</option>
+    </select>
+    <br>
 
+    <label for="riskAmount">Risk Amount:</label>
+    <input type="number" id="riskAmount" placeholder="Enter Risk Amount" step="0.01" min="0.01">
+    <br>
+
+    <label for="riskInstrument">Trading Instrument:</label>
+    <input list="pair-list" id="riskInstrument" placeholder="Select Instrument">
+    <datalist id="pair-list">
+        <!-- Options will be populated dynamically via JavaScript -->
+    </datalist>
+    <br>
+
+    <label for="desiredProfit">Desired Profit:</label>
+    <input type="number" id="desiredProfit" placeholder="Enter Desired Profit" step="0.01" min="0.01">
+    <br>
+
+    <label for="entryPrice1">Entry Price:</label>
+    <input type="number" id="entryPrice1" placeholder="Enter Entry Price" step="0.0001" min="0.0001">
+    <br>
+
+    <label for="lotSize">Lot Size:</label>
+    <input type="number" id="lotSize" placeholder="Enter Lot Size" step="0.01" min="0.01">
+    <br><br>
+
+    <!-- Button to calculate SL and TP -->
+    <button onclick="calculateRisk()">Calculate SL and TP</button>
+
+    <!-- Display the results -->
+    <p id="slAmount"></p>
+    <p id="tpAmount"></p>
+</div>
         <!-- Max Lot Calculator -->
         <div class="calculator" id="maxLotCalculator" style="display: none;">
             <h2>Max Lot Calculator</h2>
