@@ -1,54 +1,70 @@
 const samplePrices = {
-    AUDCAD: { samplePrice: 0.91142, conversionPrice: 0.67128, contractSize: 100000 },
-    AUDCHF: { samplePrice: 0.56864, conversionPrice: 0.67128, contractSize: 100000 },
-    AUDJPY: { samplePrice: 94.337, conversionPrice: 0.67128, contractSize: 100000 },
-    AUDNZD: { samplePrice: 1.08971, conversionPrice: 0.67128, contractSize: 100000 },
-    AUDSGD: { samplePrice: 0.87075, conversionPrice: 0.67128, contractSize: 100000 },
-    CADCHF: { samplePrice: 0.62395, conversionPrice: 1.35727, contractSize: 100000 },
-    CADJPY: { samplePrice: 103.512, conversionPrice: 1.35727, contractSize: 100000 },
-    CHFJPY: { samplePrice: 165.916, conversionPrice: 0.84649, contractSize: 100000 },
-    EURAUD: { samplePrice: 1.65193, conversionPrice: 1.10906, contractSize: 100000 },
-    EURCAD: { samplePrice: 1.50557, conversionPrice: 1.10906, contractSize: 100000 },
-    EURCHF: { samplePrice: 0.93937, conversionPrice: 1.10906, contractSize: 100000 },
-    EURGBP: { samplePrice: 0.84363, conversionPrice: 1.10906, contractSize: 100000 },
-    EURHKD: { samplePrice: 8.6465, conversionPrice: 1.10906, contractSize: 100000 },
-    EURHUF: { samplePrice: 394.783, conversionPrice: 1.10906, contractSize: 100000 },
-    EURJPY: { samplePrice: 155.838, conversionPrice: 1.10906, contractSize: 100000 },
-    EURNOK: { samplePrice: 11.79938, conversionPrice: 1.10906, contractSize: 100000 },
-    EURNZD: { samplePrice: 1.79963, conversionPrice: 1.10906, contractSize: 100000 },
-    EURSGD: { samplePrice: 1.43843, conversionPrice: 1.10906, contractSize: 100000 },
-    EURTRY: { samplePrice: 37.76918, conversionPrice: 1.10906, contractSize: 100000 },
-    GBPAUD: { samplePrice: 1.9572, conversionPrice: 1.29288, contractSize: 100000 },
-    GBPCAD: { samplePrice: 1.78481, conversionPrice: 1.29288, contractSize: 100000 },
-    GBPCHF: { samplePrice: 1.1137, conversionPrice: 1.29288, contractSize: 100000 },
-    GBPJPY: { samplePrice: 199.233, conversionPrice: 1.29288, contractSize: 100000 },
-    GBPNZD: { samplePrice: 2.1329, conversionPrice: 1.29288, contractSize: 100000 },
-    GBPSGD: { samplePrice: 1.70531, conversionPrice: 1.29288, contractSize: 100000 },
-    MXNJPY: { samplePrice: 7.338, conversionPrice: 19.18399, contractSize: 100000 },
-    NOKJPY: { samplePrice: 13.226, conversionPrice: 10.62881, contractSize: 100000 },
-    NZDCAD: { samplePrice: 0.837, conversionPrice: 0.61732, contractSize: 100000 },
-    NZDCHF: { samplePrice: 0.5222, conversionPrice: 0.61732, contractSize: 100000 },
-    NZDJPY: { samplePrice: 86.59, conversionPrice: 0.61732, contractSize: 100000 },
-    NZDSGD: { samplePrice: 0.79989, conversionPrice: 0.61732, contractSize: 100000 },
-    SGDJPY: { samplePrice: 108.217, conversionPrice: 1.29614, contractSize: 100000 },
-    USDCAD: { samplePrice: 1.35727, conversionPrice: 1, contractSize: 100000 },
-    USDCHF: { samplePrice: 0.84649, conversionPrice: 1, contractSize: 100000 },
-    USDCNH: { samplePrice: 7.10122, conversionPrice: 1, contractSize: 100000 },
-    USDDKK: { samplePrice: 6.72319, conversionPrice: 1, contractSize: 100000 },
-    USDHUF: { samplePrice: 355.721, conversionPrice: 1, contractSize: 100000 },
-    USDJPY: { samplePrice: 140.145, conversionPrice: 1, contractSize: 100000 },
-    USDMXN: { samplePrice: 19.18399, conversionPrice: 1, contractSize: 100000 },
-    USDNOK: { samplePrice: 10.62881, conversionPrice: 1, contractSize: 100000 },
-    USDPLN: { samplePrice: 3.85478, conversionPrice: 1, contractSize: 100000 },
-    USDSGD: { samplePrice: 1.29614, conversionPrice: 1, contractSize: 100000 },
-    USDTRY: { samplePrice: 33.97974, conversionPrice: 1, contractSize: 100000 },
-    USDZAR: { samplePrice: 17.68835, conversionPrice: 1, contractSize: 100000 },
-    ZARJPY: { samplePrice: 7.938, conversionPrice: 17.68835, contractSize: 100000 },
-    XAUUSD: { samplePrice: 2494.01, conversionPrice: 1, contractSize: 100 },
-    XAGUSD: { samplePrice: 31.375, conversionPrice: 1, contractSize: 5000 },
-    XPTUSD: { samplePrice: 911.36, conversionPrice: 1, contractSize: 100 },
-    UKOUSD: { samplePrice: 82.679, conversionPrice: 1, contractSize: 100 },
-    USOUSD: { samplePrice: 82.464, conversionPrice: 1, contractSize: 100 },
+    AUDCAD: { samplePrice: 0.92083, conversionPrice: 0.663, contractSize: 100000 },
+    AUDCHF: { samplePrice: 0.58089, conversionPrice: 0.663, contractSize: 100000 },
+    AUDJPY: { samplePrice: 102.076, conversionPrice: 0.663, contractSize: 100000 },
+    AUDNZD: { samplePrice: 1.10646, conversionPrice: 0.663, contractSize: 100000 },
+    AUDSGD: { samplePrice: 0.87952, conversionPrice: 0.663, contractSize: 100000 },
+    CADCHF: { samplePrice: 0.63077, conversionPrice: 1.38885, contractSize: 100000 },
+    CADJPY: { samplePrice: 110.814, conversionPrice: 1.38885, contractSize: 100000 },
+    CHFJPY: { samplePrice: 175.680, conversionPrice: 0.87639, contractSize: 100000 },
+    EURAUD: { samplePrice: 1.62152, conversionPrice: 1.07515, contractSize: 100000 },
+    EURCAD: { samplePrice: 1.49324, conversionPrice: 1.07515, contractSize: 100000 },
+    EURCHF: { samplePrice: 0.94179, conversionPrice: 1.07515, contractSize: 100000 },
+    EURGBP: { samplePrice: 0.83297, conversionPrice: 1.07515, contractSize: 100000 },
+    EURHKD: { samplePrice: 8.35724, conversionPrice: 1.07515, contractSize: 100000 },
+    EURHUF: { samplePrice: 406.33, conversionPrice: 1.07515, contractSize: 100000 },
+    EURJPY: { samplePrice: 165.449, conversionPrice: 1.07515, contractSize: 100000 },
+    EURNOK: { samplePrice: 11.78267, conversionPrice: 1.07515, contractSize: 100000 },
+    EURNZD: { samplePrice: 1.79442, conversionPrice: 1.07515, contractSize: 100000 },
+    EURSGD: { samplePrice: 1.426, conversionPrice: 1.07515, contractSize: 100000 },
+    EURTRY: { samplePrice: 36.91972, conversionPrice: 1.07515, contractSize: 100000 },
+    GBPAUD: { samplePrice: 1.94654, conversionPrice: 1.29105, contractSize: 100000 },
+    GBPCAD: { samplePrice: 1.79241, conversionPrice: 1.29105, contractSize: 100000 },
+    GBPCHF: { samplePrice: 1.13087, conversionPrice: 1.29105, contractSize: 100000 },
+    GBPJPY: { samplePrice: 198.666, conversionPrice: 1.29105, contractSize: 100000 },
+    GBPNZD: { samplePrice: 2.15482, conversionPrice: 1.29105, contractSize: 100000 },
+    GBPSGD: { samplePrice: 1.71213, conversionPrice: 1.29105, contractSize: 100000 },
+    MXNJPY: { samplePrice: 7.67, conversionPrice: 20.0434, contractSize: 100000 },
+    NOKJPY: { samplePrice: 14.039, conversionPrice: 10.95962, contractSize: 100000 },
+    NZDCAD: { samplePrice: 0.83183, conversionPrice: 0.59916, contractSize: 100000 },
+    NZDCHF: { samplePrice: 0.52493, conversionPrice: 0.59916, contractSize: 100000 },
+    NZDJPY: { samplePrice: 92.194, conversionPrice: 0.59916, contractSize: 100000 },
+    NZDSGD: { samplePrice: 0.79442, conversionPrice: 0.59916, contractSize: 100000 },
+    SGDJPY: { samplePrice: 116.052, conversionPrice: 1.32639, contractSize: 100000 },
+    USDCAD: { samplePrice: 1.38885, conversionPrice: 1, contractSize: 100000 },
+    USDCHF: { samplePrice: 0.87639, conversionPrice: 1, contractSize: 100000 },
+    USDCNH: { samplePrice: 7.17358, conversionPrice: 1, contractSize: 100000 },
+    USDDKK: { samplePrice: 6.93466, conversionPrice: 1, contractSize: 100000 },
+    USDHUF: { samplePrice: 377.198, conversionPrice: 1, contractSize: 100000 },
+    USDJPY: { samplePrice: 153.952, conversionPrice: 1, contractSize: 100000 },
+    USDMXN: { samplePrice: 20.0434, conversionPrice: 1, contractSize: 100000 },
+    USDNOK: { samplePrice: 10.95962, conversionPrice: 1, contractSize: 100000 },
+    USDPLN: { samplePrice: 4.03388, conversionPrice: 1, contractSize: 100000 },
+    USDSGD: { samplePrice: 1.32639, conversionPrice: 1, contractSize: 100000 },
+    USDTRY: { samplePrice: 34.23909, conversionPrice: 1, contractSize: 100000 },
+    USDZAR: { samplePrice: 17.41809, conversionPrice: 1, contractSize: 100000 },
+    ZARJPY: { samplePrice: 8.833, conversionPrice: 17.41809, contractSize: 100000 },
+    USDHKD: { samplePrice: 7.7726, conversionPrice: 1, contractSize: 100000 },
+    USDSEK: { samplePrice: 10.79863, conversionPrice: 1, contractSize: 100000 },
+    XAUUSD: { samplePrice: 2662.78, conversionPrice: 1, contractSize: 100 },
+    XAGUSD: { samplePrice: 31.123, conversionPrice: 1, contractSize: 5000 },
+    XPTUSD: { samplePrice: 980.15, conversionPrice: 1, contractSize: 100 },
+    UKOUSD: { samplePrice: 74.526, conversionPrice: 1, contractSize: 100 },
+    USOUSD: { samplePrice: 71.506, conversionPrice: 1, contractSize: 100 },
+    AUS200: { samplePrice: 8232.82, conversionPrice: 0.663, contractSize: 100000 },
+    EUSTX50: { samplePrice: 4830.49, conversionPrice: 1.07515, contractSize: 100000 },
+    FRA40: { samplePrice: 7411.24, conversionPrice: 1.07515, contractSize: 100000 },
+    US2000: { samplePrice: 2410, conversionPrice: 1, contractSize: 100000 },
+    VIX: { samplePrice: 13.1, conversionPrice: 1, contractSize: 100000 },
+    JP225: { samplePrice: 39298, conversionPrice: 153.952, contractSize: 100000 },
+    GER30: { samplePrice: 19261.96, conversionPrice: 1.07515, contractSize: 100000 },
+    HK50: { samplePrice: 21026.6, conversionPrice: 7.7726, contractSize: 100000 },
+    NDX100: { samplePrice: 20838.38, conversionPrice: 1, contractSize: 100000 },
+    NTH25: { samplePrice: 878.54, conversionPrice: 2, contractSize: 100000 },
+    SPX500: { samplePrice: 5937.58, conversionPrice: 1, contractSize: 100000 },
+    SWI20: { samplePrice: 11945.74, conversionPrice: 0.87639, contractSize: 100000 },
+    UK100: { samplePrice: 8164.99, conversionPrice: 1.29105, contractSize: 100000 },
+    US30: { samplePrice: 43845.01, conversionPrice: 1, contractSize: 100000 },
     ADAUSD: { samplePrice: 0.3712, conversionPrice: 1, contractSize: 100 },
     BCHUSD: { samplePrice: 373.655, conversionPrice: 1, contractSize: 1 },
     BTCUSD: { samplePrice: 74545.49, conversionPrice: 1, contractSize: 1 },
@@ -59,7 +75,8 @@ const samplePrices = {
     XLMUSD: { samplePrice: 0.09751, conversionPrice: 1, contractSize: 100 },
     XMRUSD: { samplePrice: 162.45, conversionPrice: 1, contractSize: 1 },
     XRPUSD: { samplePrice: 0.5561, conversionPrice: 1, contractSize: 100 }
-  };
+};
+
 // Populate the pair-list datalist with pairs from samplePrices on page load
 document.addEventListener("DOMContentLoaded", () => {
     const pairList = document.getElementById("pair-list");
@@ -121,12 +138,43 @@ const instruments = {
     "EURCHF": { pipValue: 11.08, conversionRate: 10000, type: "forex" },
     "EURGBP": { pipValue: 12.25, conversionRate: 10000, type: "forex" },
     "EURHKD": { pipValue: 1.28, conversionRate: 10000, type: "forex" },
+    "EURHUF": { pipValue: 2.84, conversionRate: 10000, type: "forex" },
+    "EURJPY": { pipValue: 6.61, conversionRate: 100, type: "forex" },
+    "EURNOK": { pipValue: 0.90, conversionRate: 10000, type: "forex" },
+    "EURNZD": { pipValue: 5.90, conversionRate: 10000, type: "forex" },
+    "EURSGD": { pipValue: 7.36, conversionRate: 10000, type: "forex" },
+    "EURTRY": { pipValue: 0.35, conversionRate: 10000, type: "forex" },
     "EURUSD": { pipValue: 10.00, conversionRate: 10000, type: "forex" },
-    "GBPUSD": { pipValue: 6.48, conversionRate: 10000, type: "forex" },
+    "GBPAUD": { pipValue: 6.48, conversionRate: 10000, type: "forex" },
+    "GBPCAD": { pipValue: 5.90, conversionRate: 10000, type: "forex" },
+    "GBPCHF": { pipValue: 11.08, conversionRate: 10000, type: "forex" },
+    "GBPJPY": { pipValue: 10.00, conversionRate: 100, type: "forex" },
+    "GBPNZD": { pipValue: 5.90, conversionRate: 10000, type: "forex" },
+    "GBPSGD": { pipValue: 7.36, conversionRate: 10000, type: "forex" },
+    "GBPUSD": { pipValue: 10.00, conversionRate: 10000, type: "forex" },
+    "MXNJPY": { pipValue: 6.61, conversionRate: 100, type: "forex" },
+    "NOKJPY": { pipValue: 6.60, conversionRate: 100, type: "forex" },
+    "NZDCAD": { pipValue: 7.23, conversionRate: 10000, type: "forex" },
+    "NZDCHF": { pipValue: 11.09, conversionRate: 10000, type: "forex" },
     "NZDJPY": { pipValue: 6.61, conversionRate: 100, type: "forex" },
+    "NZDSGD": { pipValue: 7.36, conversionRate: 10000, type: "forex" },
+    "SGDJPY": { pipValue: 6.61, conversionRate: 100, type: "forex" },
     "USDCAD": { pipValue: 7.23, conversionRate: 10000, type: "forex" },
     "USDCHF": { pipValue: 11.36, conversionRate: 10000, type: "forex" },
+    "USDCNH": { pipValue: 1.37, conversionRate: 10000, type: "forex" },
+    "USDDKK": { pipValue: 1.43, conversionRate: 10000, type: "forex" },
+    "USDHUF": { pipValue: 2.83, conversionRate: 10000, type: "forex" },
     "USDJPY": { pipValue: 6.61, conversionRate: 100, type: "forex" },
+    "USDMXN": { pipValue: 0.50, conversionRate: 10000, type: "forex" },
+    "USDNOK": { pipValue: 0.90, conversionRate: 10000, type: "forex" },
+    "USDPLN": { pipValue: 2.42, conversionRate: 10000, type: "forex" },
+    "USDSGD": { pipValue: 6.36, conversionRate: 10000, type: "forex" },
+    "USDTRY": { pipValue: 0.35, conversionRate: 10000, type: "forex" },
+    "USDZAR": { pipValue: 0.53, conversionRate: 10000, type: "forex" },
+    "ZARJPY": { pipValue: 6.61, conversionRate: 100, type: "forex" },
+    "NZDUSD": { pipValue: 10.00, conversionRate: 10000, type: "forex" },
+    "USDHKD": { pipValue: 1.28, conversionRate: 10000, type: "forex" },
+    "USDSEK": { pipValue: 10.80, conversionRate: 10000, type: "forex" },
     
     // Indices
     "SPX500": { pipValue: 10.00, conversionRate: 1, type: "index" },
@@ -361,14 +409,21 @@ function calculateMaxLot() {
     // Retrieve samplePrice, conversionPrice, and contractSize for the specified pair
     const { samplePrice, conversionPrice, contractSize } = samplePrices[pair];
 
-    // Calculate the converted price
-    const convertedPrice = exceptionPairs.includes(pair)
-        ? (1 / samplePrice) * (1 / conversionPrice)  // For exception pairs
-        : (1 / samplePrice) * conversionPrice;       // Default calculation for all other pairs
+    let maxLotSize;
+    // Determine which formula to use based on exceptions
+    if (conversionPrice === 1) {
+        // Use the formula for pairs with conversionPrice 1
+        maxLotSize = (balance * leverage) / (contractSize * samplePrice);
+    } else {
+        // Calculate the converted price
+        const convertedPrice = exceptionPairs.includes(pair)
+            ? (1 / samplePrice) * (1 / conversionPrice)  // For specific exception pairs
+            : (1 / samplePrice) * conversionPrice;       // Default calculation for other pairs
 
-    // Calculate Max Lot Size
-    const maxLotSize = (balance * leverage) / (convertedPrice * contractSize * samplePrice);
+        // Calculate Max Lot Size with the standard formula
+        maxLotSize = (balance * leverage) / (convertedPrice * contractSize * samplePrice);
+    }
 
-    // Display the converted price and Max Lot Size
-    document.getElementById("maxLotSize").textContent = `Converted Price: ${convertedPrice.toFixed(4)}, Max Lot Size: ${maxLotSize.toFixed(4)}`;
+    // Display the Max Lot Size
+    document.getElementById("maxLotSize").textContent = `Max Lot Size: ${maxLotSize.toFixed(4)}`;
 }
