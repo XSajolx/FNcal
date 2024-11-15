@@ -65,7 +65,7 @@ const samplePrices = {
     SWI20: { samplePrice: 11945.74, conversionPrice: 0.87639, contractSize: 100000 },
     UK100: { samplePrice: 8164.99, conversionPrice: 1.29105, contractSize: 100000 },
     US30: { samplePrice: 43845.01, conversionPrice: 1, contractSize: 100000 },
-    ADAUSD: { samplePrice: 0.3712, conversionPrice: 1, contractSize: 100 },
+    /*ADAUSD: { samplePrice: 0.3712, conversionPrice: 1, contractSize: 100 },
     BCHUSD: { samplePrice: 373.655, conversionPrice: 1, contractSize: 1 },
     BTCUSD: { samplePrice: 74545.49, conversionPrice: 1, contractSize: 1 },
     DOGUSD: { samplePrice: 0.19113, conversionPrice: 1, contractSize: 1000 },
@@ -75,6 +75,7 @@ const samplePrices = {
     XLMUSD: { samplePrice: 0.09751, conversionPrice: 1, contractSize: 100 },
     XMRUSD: { samplePrice: 162.45, conversionPrice: 1, contractSize: 1 },
     XRPUSD: { samplePrice: 0.5561, conversionPrice: 1, contractSize: 100 }
+    */
 };
 
 // Populate the pair-list datalist with pairs from samplePrices on page load
@@ -112,7 +113,7 @@ function showCalculator(calculatorId) {
 document.addEventListener("DOMContentLoaded", initializeCalculators);
 const instruments = {
     // Crypto
-    "ADAUSD": { pipValue: 0.10, conversionRate: 1000, type: "crypto" },
+ /* "ADAUSD": { pipValue: 0.10, conversionRate: 1000, type: "crypto" },
     "BCHUSD": { pipValue: 0.01, conversionRate: 100, type: "crypto" },
     "BTCUSD": { pipValue: 0.10, conversionRate: 10, type: "crypto" },
     "DOGUSD": { pipValue: 0.10, conversionRate: 10000, type: "crypto" },
@@ -122,7 +123,7 @@ const instruments = {
     "XLMUSD": { pipValue: 0.01, conversionRate: 10000, type: "crypto" },
     "XMRUSD": { pipValue: 0.10, conversionRate: 10, type: "crypto" },
     "XRPUSD": { pipValue: 0.10, conversionRate: 1000, type: "crypto" },
-    
+*/ 
     // Forex 
     "AUDCAD": { pipValue: 7.24, conversionRate: 10000, type: "forex" },
     "AUDCHF": { pipValue: 11.09, conversionRate: 10000, type: "forex" },
@@ -284,15 +285,17 @@ function calculateMargin() {
 
     // Retrieve sample data
     const { samplePrice, conversionPrice, contractSize } = samplePrices[instrument];
-    const exceptionPairs = ["CADCHF", "CADJPY", "CHFJPY", "MXNJPY", "NOKJPY"];
 
-    // Calculate converted price
-    const convertedPrice = exceptionPairs.includes(instrument)
-        ? (1 / samplePrice) * (1 / conversionPrice)
-        : (1 / samplePrice) * conversionPrice;
-
-    // Calculate margin required
-    const marginRequired = (contractSize * convertedPrice * lot) / leverage;
+    // Calculate margin required based on conversion price
+    let marginRequired;
+    if (conversionPrice === 1) {
+        // Use samplePrice directly when conversionPrice is 1
+        marginRequired = (contractSize * samplePrice * lot) / leverage;
+    } else {
+        // Calculate converted price for other conversion rates
+        const convertedPrice = (1 / samplePrice) * conversionPrice;
+        marginRequired = (contractSize * convertedPrice * lot) / leverage;
+    }
 
     // Display result
     document.getElementById("marginAmount").textContent = `Required Margin: $${marginRequired.toFixed(2)}`;
@@ -310,7 +313,6 @@ document.addEventListener("DOMContentLoaded", () => {
         instrumentList.appendChild(option);
     });
 });
-
 // Function to update the Sample Price field in the Risk Calculator
 function updateSamplePrice() {
     const instrument = document.getElementById("riskInstrument").value.toUpperCase();
