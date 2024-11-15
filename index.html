@@ -54,98 +54,85 @@
 
         <!-- Margin Calculator -->
         <div class="calculator" id="marginCalculator" style="display: none;">
-            <label for="marginInstrument">Instrument:</label>
-            <input list="pair-list" id="marginInstrument" placeholder="Select Instrument" autocomplete="off" oninput="updateMarginSamplePrice()">
-            <datalist id="pair-list">
-                <!-- Options will be populated dynamically by JavaScript -->
-            </datalist>
-            <br>
-        
-            <label for="samplePriceMargin">Sample Price:</label>
-            <input type="text" id="samplePriceMargin" placeholder="" readonly>
-            <br>
-        
-            <label for="leverage">Leverage:</label>
-            <input type="number" id="leverage" placeholder="" step="1" min="1">
-            <br>
-        
-            <label for="lot2">Lot:</label> <!-- Updated id here -->
-            <input type="number" id="lot2" placeholder="Enter Lot Size" step="0.01" min="0.01"> <!-- Changed id to "lot2" -->
-            <br><br>
-        
-            <!-- Button to calculate margin -->
-            <button type="button" onclick="calculateMargin()">Calculate Margin</button>
-        
-            <!-- Display the result -->
-            <p id="marginAmount"></p>
-        </div>                
-        <!-- Risk Calculator -->
-<!-- Risk Calculator -->
-<!-- Risk Calculator -->
-<div class="calculator" id="riskCalculator" style="display: none;">
-    <label for="position">Position:</label>
-    <select id="position">
-        <option value="buy">Buy</option>
-        <option value="sell">Sell</option>
-    </select>
-    <br>
-
-    <label for="riskAmount">Risk Amount:</label>
-    <input type="number" id="riskAmount" placeholder="Enter Risk Amount" step="0.01" min="0.01">
-    <br>
-
-    <label for="riskInstrument">Trading Instrument:</label>
-    <input list="pair-list" id="riskInstrument" placeholder="Select Instrument" oninput="updateSamplePrice()">
-    <datalist id="pair-list">
-        <!-- Options will be populated dynamically -->
-    </datalist>
-    <br>
-
-    <label for="samplePriceDisplay">Sample Price:</label>
-    <input type="text" id="samplePriceDisplay" placeholder="" readonly>
-    <br>
-
-    <label for="desiredProfit">Desired Profit:</label>
-    <input type="number" id="desiredProfit" placeholder="" step="0.01" min="0.01">
-    <br>
-
-    <label for="entryPrice1">Entry Price:</label>
-    <input type="number" id="entryPrice1" placeholder="" step="0.01" min="0.01">
-    <br>
-
-    <label for="lotSize">Lot Size:</label>
-    <input type="number" id="lotSize" placeholder="" step="0.01" min="0.01">
-    <br><br>
-
-    <!-- Button to calculate SL and TP -->
-    <button onclick="calculateRisk()">Calculate SL and TP</button>
-
-    <!-- Display the result -->
-    <p id="slAmount"></p>
-    <p id="tpAmount"></p>
-</div>
-        <!-- Max Lot Calculator -->
-        <div class="calculator" id="maxLotCalculator" style="display: none;">
-            <h2>Max Lot Calculator</h2>
+            <h2>Margin Calculator</h2>
             <div class="input-group">
-                <label for="balance">Account Balance:</label>
-                <input type="number" id="balance" name="balance" required>
+                <label for="marginInstrument">Instrument:</label>
+                <input list="pair-list" id="marginInstrument" placeholder="Select Instrument" autocomplete="off" oninput="updateMarginSamplePrice()">
+                <datalist id="pair-list">
+                    <!-- Options populated dynamically by JavaScript -->
+                </datalist>
             </div>
             <div class="input-group">
                 <label for="leverage">Leverage:</label>
-                <input type="number" id="maxLotLeverage" name="leverage" required>
+                <input type="number" id="leverage" placeholder="" step="1" min="1">
             </div>
+            <div class="input-group">
+                <label for="lot2">Lot:</label>
+                <input type="number" id="lot2" placeholder="" step="0.01" min="0.01">
+            </div>
+            <button type="button" onclick="calculateMargin()">Calculate Margin</button>
+            <p id="marginAmount"></p>
+        </div>     
+
+        <!-- Risk Calculator -->
+        <div class="calculator" id="riskCalculator" style="display: none;">
+            <h2>Risk Calculator</h2>
+            <div class="input-group">
+                <label for="riskInstrument">Trading Instrument:</label>
+                <input list="pair-list" id="riskInstrument" placeholder="Select Instrument" oninput="updateSamplePrice()">
+                <datalist id="pair-list">
+                    <!-- Options populated dynamically -->
+                </datalist>
+            </div>
+            <div class="input-group">
+                <label for="position">Position:</label>
+                <select id="position">
+                    <option value="buy">Buy</option>
+                    <option value="sell">Sell</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="riskAmount">Risk Amount:</label>
+                <input type="number" id="riskAmount" placeholder="" step="0.01" min="0.01">
+            </div>
+            <div class="input-group">
+                <label for="desiredProfit">Desired Profit:</label>
+                <input type="number" id="desiredProfit" placeholder="" step="0.01" min="0.01">
+            </div>
+            <div class="input-group">
+                <label for="entryPrice1">Entry Price:</label>
+                <input type="number" id="entryPrice1" placeholder="" step="0.01" min="0.01">
+            </div>
+            <div class="input-group">
+                <label for="lotSize">Lot Size:</label>
+                <input type="number" id="lotSize" placeholder="" step="0.01" min="0.01">
+            </div>
+            <button onclick="calculateRisk()">Calculate SL and TP</button>
+            <p id="slAmount"></p>
+            <p id="tpAmount"></p>
+        </div>
+
+        <!-- Max Lot Calculator -->
+        <div class="calculator" id="maxLotCalculator" style="display: none;">
+            <h2>Max Lot Calculator</h2>
             <div class="input-group">
                 <label for="pair">Choose a Pair:</label>
                 <input type="text" id="pair" placeholder="Search for a pair..." list="pair-list">
                 <datalist id="pair-list"></datalist>
             </div>
-            <button onclick="calculateMaxLot()">Calculate Max Lot Size</button> <!-- Updated function name here -->
-            <div id="maxLotResult">
-                <p><span id="maxLotSize"></span></p>
+            <div class="input-group">
+                <label for="balance">Account Balance:</label>
+                <input type="number" id="balance" name="balance" required>
             </div>
+            <div class="input-group">
+                <label for="maxLotLeverage">Leverage:</label>
+                <input type="number" id="maxLotLeverage" name="leverage" required>
+            </div>
+            <button onclick="calculateMaxLot()">Calculate Max Lot Size</button>
+            <p id="maxLotSize"></p>
         </div>
-        
-        <script src="script.js"></script>        
-    </body>
-    </html>
+    </div>
+
+    <script src="script.js"></script>        
+</body>
+</html>
