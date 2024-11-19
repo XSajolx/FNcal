@@ -1,4 +1,8 @@
 const samplePrices = {
+    AUDUSD: { samplePrice: 0.65042, conversionPrice: 1, contractSize: 100000 },
+    NZDUSD: { samplePrice: 0.58855, conversionPrice: 1, contractSize: 100000 },
+    GBPUSD: { samplePrice: 1.26702, conversionPrice: 1, contractSize: 100000 },
+    EURUSD: { samplePrice: 1.05862, conversionPrice: 1, contractSize: 100000 },
     AUDCAD: { samplePrice: 0.92083, conversionPrice: 0.663, contractSize: 100000 },
     AUDCHF: { samplePrice: 0.58089, conversionPrice: 0.663, contractSize: 100000 },
     AUDJPY: { samplePrice: 102.076, conversionPrice: 0.663, contractSize: 100000 },
@@ -260,14 +264,17 @@ function calculateMargin() {
     const instrument = document.getElementById("marginInstrument").value.toUpperCase();
     const lotValue = document.getElementById("lot2").value; // Updated to "lot2"
     const leverageValue = document.getElementById("leverage").value;
+    const priceInputValue = document.getElementById("manualPrice").value; // Manual price input
 
     console.log("Raw Instrument Value:", instrument);
     console.log("Raw Lot2 Value:", lotValue);  // Should log the raw input from "lot2" field
     console.log("Raw Leverage Value:", leverageValue);
+    console.log("Manual Price Value:", priceInputValue);
 
     // Parse values
     const lot = parseFloat(lotValue);
     const leverage = parseFloat(leverageValue);
+    const manualPrice = parseFloat(priceInputValue);
 
     // Check if values are parsed correctly
     if (isNaN(lot) || isNaN(leverage)) {
@@ -277,23 +284,32 @@ function calculateMargin() {
     }
 
     // Check if the instrument exists in samplePrices
-    if (!samplePrices[instrument]) {
-        console.error("Instrument not found in samplePrices.");
-        document.getElementById("marginAmount").textContent = "Invalid instrument. Please check input.";
+    if (!samplePrices[instrument] && isNaN(manualPrice)) {
+        console.error("Instrument not found and no manual price provided.");
+        document.getElementById("marginAmount").textContent = "Invalid instrument or missing price. Please check your input.";
         return;
     }
 
     // Retrieve sample data
-    const { samplePrice, conversionPrice, contractSize } = samplePrices[instrument];
+    const { samplePrice = manualPrice, conversionPrice = 1, contractSize = 100000 } = samplePrices[instrument] || {};
+
+    // Determine the price to use (manual input takes precedence)
+    const priceToUse = isNaN(manualPrice) ? samplePrice : manualPrice;
+
+    if (isNaN(priceToUse)) {
+        console.error("Price to use is invalid.");
+        document.getElementById("marginAmount").textContent = "Invalid price. Please provide a valid price.";
+        return;
+    }
 
     // Calculate margin required based on conversion price
     let marginRequired;
     if (conversionPrice === 1) {
-        // Use samplePrice directly when conversionPrice is 1
-        marginRequired = (contractSize * samplePrice * lot) / leverage;
+        // Use priceToUse directly when conversionPrice is 1
+        marginRequired = (contractSize * priceToUse * lot) / leverage;
     } else {
         // Calculate converted price for other conversion rates
-        const convertedPrice = (1 / samplePrice) * conversionPrice;
+        const convertedPrice = (1 / priceToUse) * conversionPrice;
         marginRequired = (contractSize * convertedPrice * lot) / leverage;
     }
 
@@ -311,32 +327,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const option = document.createElement("option");
         option.value = symbol;
         instrumentList.appendChild(option);
-    });
-});
-// Function to update the Sample Price field in the Risk Calculator
-function updateSamplePrice() {
-    const instrument = document.getElementById("riskInstrument").value.toUpperCase();
-
-    // Check if the instrument exists in samplePrices
-    if (samplePrices[instrument]) {
-        const { samplePrice } = samplePrices[instrument];
-        document.getElementById("samplePriceDisplay").value = samplePrice.toFixed(4);
-        console.log("Updated Sample Price:", samplePrice);
-    } else {
-        document.getElementById("samplePriceDisplay").value = "N/A";
-        console.warn("Instrument not found in samplePrices.");
-    }
-}
-
-// Populate the instrument list
-document.addEventListener("DOMContentLoaded", () => {
-    const pairList = document.getElementById("pair-list");
-
-    // Populate options in the datalist for available instruments
-    Object.keys(samplePrices).forEach(symbol => {
-        const option = document.createElement("option");
-        option.value = symbol;
-        pairList.appendChild(option);
     });
 });
 function calculateRisk() {
@@ -369,25 +359,31 @@ function calculateRisk() {
         return;
     }
 
-    // Determine if the instrument is an index and get the conversion rate
-    const isIndex = instruments[instrument].type === "index";
-    const conversionRate = instruments[instrument].conversionRate;
-    const divisor = isIndex ? 10 : 100;
+    // Fetch pipValue and conversionRate for the selected instrument
+    const { pipValue, conversionRate } = instruments[instrument];
 
-    // Calculate SL and TP based on the position and instrument type
+    // Ensure pip value and conversion rate are valid
+    if (isNaN(pipValue) || isNaN(conversionRate) || pipValue <= 0 || conversionRate <= 0) {
+        document.getElementById("slAmount").textContent = "Invalid Pip value or Conversion rate for the selected instrument.";
+        document.getElementById("tpAmount").textContent = "";
+        console.warn("Invalid Pip value or Conversion rate.");
+        return;
+    }
+
+    // Calculate Stop Loss (SL) and Take Profit (TP)
     let stopLoss, takeProfit;
 
     if (position === "buy") {
-        stopLoss = entryPrice - (riskAmount / (lotSize * divisor * conversionRate));
-        takeProfit = entryPrice + (desiredProfit / (lotSize * divisor * conversionRate));
+        stopLoss = entryPrice - (riskAmount / (lotSize * pipValue * conversionRate));
+        takeProfit = entryPrice + (desiredProfit / (lotSize * pipValue * conversionRate));
     } else if (position === "sell") {
-        stopLoss = entryPrice + (riskAmount / (lotSize * divisor * conversionRate));
-        takeProfit = entryPrice - (desiredProfit / (lotSize * divisor * conversionRate));
+        stopLoss = entryPrice + (riskAmount / (lotSize * pipValue * conversionRate));
+        takeProfit = entryPrice - (desiredProfit / (lotSize * pipValue * conversionRate));
     }
 
-    // Display results
-    document.getElementById("slAmount").textContent = `Stop Loss (SL): ${stopLoss.toFixed(4)}`;
-    document.getElementById("tpAmount").textContent = `Take Profit (TP): ${takeProfit.toFixed(4)}`;
+    // Display results with up to 5 decimal places if necessary
+    document.getElementById("slAmount").textContent = `Stop Loss (SL): ${stopLoss.toFixed(5).replace(/\.?0+$/, '')}`;
+    document.getElementById("tpAmount").textContent = `Take Profit (TP): ${takeProfit.toFixed(5).replace(/\.?0+$/, '')}`;
 }
 const exceptionPairs = ["CADCHF", "CADJPY", "CHFJPY", "MXNJPY", "NOKJPY"];
 
@@ -429,3 +425,4 @@ function calculateMaxLot() {
     // Display the Max Lot Size
     document.getElementById("maxLotSize").textContent = `Max Lot Size: ${maxLotSize.toFixed(4)}`;
 }
+
