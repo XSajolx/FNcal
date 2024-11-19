@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <div class="logo">
-    <img src="Artboard 1 copy@3x.png" alt="Company Logo">
+    <img src="Artboard 1@3x.png" alt="Company Logo">
 </div>
 
 <body>
@@ -56,32 +56,42 @@
             </div>
         </div>
 
-        <!-- Margin Calculator -->
-        <div class="calculator" id="marginCalculator" style="display: none;">
+        <div class="calculator" id="marginCalculator">
             <h2>Margin Calculator</h2>
+    
+            <!-- Instrument Input -->
             <div class="input-group">
                 <label for="marginInstrument">Instrument:</label>
-                <input list="pair-list" id="marginInstrument" placeholder="Select Instrument" autocomplete="off" oninput="updateMarginSamplePrice()">
+                <input list="pair-list" id="marginInstrument" placeholder="Enter Instrument (e.g., EURUSD)" autocomplete="off">
                 <datalist id="pair-list">
                     <!-- Options populated dynamically by JavaScript -->
                 </datalist>
             </div>
+    
+            <!-- Manual Price Input -->
             <div class="input-group">
-                <label for="manualPrice">Manual Price (Optional):</label>
-                <input type="number" id="manualPrice" placeholder="Enter Price Manually" step="0.01" min="0.01">
+                <label for="manualPrice">Manual Price:</label>
+                <input type="number" id="manualPrice" placeholder="Enter Price Manually (e.g., 1.2345)" step="0.0001" min="0.0001">
             </div>
+    
+            <!-- Leverage Input -->
             <div class="input-group">
                 <label for="leverage">Leverage:</label>
-                <input type="number" id="leverage" placeholder="" step="1" min="1">
+                <input type="number" id="leverage" placeholder="Enter Leverage (e.g., 100)" step="1" min="1">
             </div>
+    
+            <!-- Lot Size Input -->
             <div class="input-group">
                 <label for="lot2">Lot:</label>
-                <input type="number" id="lot2" placeholder="" step="0.01" min="0.01">
+                <input type="number" id="lot2" placeholder="Enter Lot Size (e.g., 1.0)" step="0.01" min="0.01">
             </div>
+    
+            <!-- Calculate Button -->
             <button type="button" onclick="calculateMargin()">Calculate Margin</button>
+    
+            <!-- Result Display -->
             <p id="marginAmount"></p>
-        </div>     
-
+        </div>
         <!-- Risk Calculator -->
         <div class="calculator" id="riskCalculator" style="display: none;">
             <h2>Risk/Reward Calculator</h2>
