@@ -425,4 +425,3 @@ function calculateMaxLot() {
     // Display the Max Lot Size
     document.getElementById("maxLotSize").textContent = `Max Lot Size: ${maxLotSize.toFixed(4)}`;
 }
-
