@@ -261,129 +261,69 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 function calculateMargin() {
+    // Retrieve inputs from the DOM
     const instrument = document.getElementById("marginInstrument").value.toUpperCase();
-    const lotValue = document.getElementById("lot2").value; // Updated to "lot2"
-    const leverageValue = document.getElementById("leverage").value;
+    const lotValue = document.getElementById("lot2").value; // Lot size input
+    const leverageValue = document.getElementById("leverage").value; // Leverage input
     const priceInputValue = document.getElementById("manualPrice").value; // Manual price input
 
-    console.log("Raw Instrument Value:", instrument);
-    console.log("Raw Lot2 Value:", lotValue);  // Should log the raw input from "lot2" field
-    console.log("Raw Leverage Value:", leverageValue);
-    console.log("Manual Price Value:", priceInputValue);
+    console.log("Instrument Selected:", instrument);
+    console.log("Lot Size Input:", lotValue);
+    console.log("Leverage Input:", leverageValue);
+    console.log("Manual Price Input:", priceInputValue);
 
-    // Parse values
+    // Parse and validate inputs
     const lot = parseFloat(lotValue);
     const leverage = parseFloat(leverageValue);
     const manualPrice = parseFloat(priceInputValue);
 
-    // Check if values are parsed correctly
-    if (isNaN(lot) || isNaN(leverage)) {
-        console.error("Lot or leverage is NaN. Check your input values.");
-        document.getElementById("marginAmount").textContent = "Invalid input. Please check instrument, lot, and leverage.";
+    if (isNaN(lot) || lot <= 0) {
+        document.getElementById("marginAmount").textContent = "Invalid lot size. Please enter a positive number.";
         return;
     }
 
-    // Check if the instrument exists in samplePrices
-    if (!samplePrices[instrument] && isNaN(manualPrice)) {
-        console.error("Instrument not found and no manual price provided.");
-        document.getElementById("marginAmount").textContent = "Invalid instrument or missing price. Please check your input.";
+    if (isNaN(leverage) || leverage <= 0) {
+        document.getElementById("marginAmount").textContent = "Invalid leverage. Please enter a positive number.";
         return;
     }
 
-    // Retrieve sample data
-    const { samplePrice = manualPrice, conversionPrice = 1, contractSize = 100000 } = samplePrices[instrument] || {};
-
-    // Determine the price to use (manual input takes precedence)
-    const priceToUse = isNaN(manualPrice) ? samplePrice : manualPrice;
-
-    if (isNaN(priceToUse)) {
-        console.error("Price to use is invalid.");
-        document.getElementById("marginAmount").textContent = "Invalid price. Please provide a valid price.";
+    if (isNaN(manualPrice) || manualPrice <= 0) {
+        document.getElementById("marginAmount").textContent = "Invalid manual price. Please enter a positive number.";
         return;
     }
 
-    // Calculate margin required based on conversion price
+    // Check if the instrument exists in the samplePrices object
+    const instrumentData = samplePrices[instrument];
+
+    if (!instrumentData) {
+        document.getElementById("marginAmount").textContent = "Invalid instrument. Please select a valid instrument.";
+        return;
+    }
+
+    const { conversionPrice, contractSize } = instrumentData;
+
+    // Ensure we have valid values for conversionPrice and contractSize
+    if (isNaN(conversionPrice) || isNaN(contractSize)) {
+        document.getElementById("marginAmount").textContent = "Invalid instrument data. Please check the instrument configuration.";
+        return;
+    }
+
+    // Calculate margin based on conversionPrice and rules for indices
     let marginRequired;
     if (conversionPrice === 1) {
-        // Use priceToUse directly when conversionPrice is 1
-        marginRequired = (contractSize * priceToUse * lot) / leverage;
+        // No conversion needed
+        marginRequired = (contractSize * manualPrice * lot) / leverage;
     } else {
-        // Calculate converted price for other conversion rates
-        const convertedPrice = (1 / priceToUse) * conversionPrice;
-        marginRequired = (contractSize * convertedPrice * lot) / leverage;
+        // Convert the price for instruments with conversionPrice ≠ 1
+        const convertedPrice = (1 / manualPrice) * conversionPrice;
+        marginRequired = ((contractSize * convertedPrice * lot) / leverage) * manualPrice;
     }
 
-    // Display result
-    document.getElementById("marginAmount").textContent = `Required Margin: $${marginRequired.toFixed(2)}`;
+    console.log("Conversion Price from Instrument:", conversionPrice);
     console.log("Margin Required:", marginRequired);
-}
 
-// Populate the instrument list
-document.addEventListener("DOMContentLoaded", () => {
-    const instrumentList = document.getElementById("instrument-list");
-
-    // Populate instrument options from samplePrices keys
-    Object.keys(samplePrices).forEach(symbol => {
-        const option = document.createElement("option");
-        option.value = symbol;
-        instrumentList.appendChild(option);
-    });
-});
-function calculateRisk() {
-    const position = document.getElementById("position").value;
-    const riskAmountValue = document.getElementById("riskAmount").value;
-    const instrument = document.getElementById("riskInstrument").value.toUpperCase();
-    const desiredProfitValue = document.getElementById("desiredProfit").value;
-    const entryPriceValue = document.getElementById("entryPrice1").value;
-    const lotSizeValue = document.getElementById("lotSize").value;
-
-    // Parse inputs
-    const riskAmount = parseFloat(riskAmountValue);
-    const desiredProfit = parseFloat(desiredProfitValue);
-    const entryPrice = parseFloat(entryPriceValue);
-    const lotSize = parseFloat(lotSizeValue);
-
-    // Log inputs for debugging
-    console.log("Position:", position);
-    console.log("Risk Amount:", riskAmount);
-    console.log("Instrument:", instrument);
-    console.log("Desired Profit:", desiredProfit);
-    console.log("Entry Price:", entryPrice);
-    console.log("Lot Size:", lotSize);
-
-    // Validate inputs
-    if (!instruments[instrument] || isNaN(riskAmount) || isNaN(desiredProfit) || isNaN(entryPrice) || isNaN(lotSize)) {
-        document.getElementById("slAmount").textContent = "Invalid input. Please check all fields.";
-        document.getElementById("tpAmount").textContent = "";
-        console.warn("One or more fields are invalid.");
-        return;
-    }
-
-    // Fetch pipValue and conversionRate for the selected instrument
-    const { pipValue, conversionRate } = instruments[instrument];
-
-    // Ensure pip value and conversion rate are valid
-    if (isNaN(pipValue) || isNaN(conversionRate) || pipValue <= 0 || conversionRate <= 0) {
-        document.getElementById("slAmount").textContent = "Invalid Pip value or Conversion rate for the selected instrument.";
-        document.getElementById("tpAmount").textContent = "";
-        console.warn("Invalid Pip value or Conversion rate.");
-        return;
-    }
-
-    // Calculate Stop Loss (SL) and Take Profit (TP)
-    let stopLoss, takeProfit;
-
-    if (position === "buy") {
-        stopLoss = entryPrice - (riskAmount / (lotSize * pipValue * conversionRate));
-        takeProfit = entryPrice + (desiredProfit / (lotSize * pipValue * conversionRate));
-    } else if (position === "sell") {
-        stopLoss = entryPrice + (riskAmount / (lotSize * pipValue * conversionRate));
-        takeProfit = entryPrice - (desiredProfit / (lotSize * pipValue * conversionRate));
-    }
-
-    // Display results with up to 5 decimal places if necessary
-    document.getElementById("slAmount").textContent = `Stop Loss (SL): ${stopLoss.toFixed(5).replace(/\.?0+$/, '')}`;
-    document.getElementById("tpAmount").textContent = `Take Profit (TP): ${takeProfit.toFixed(5).replace(/\.?0+$/, '')}`;
+    // Display the calculated margin
+    document.getElementById("marginAmount").textContent = `Required Margin: $${marginRequired.toFixed(2)}`;
 }
 const exceptionPairs = ["CADCHF", "CADJPY", "CHFJPY", "MXNJPY", "NOKJPY"];
 
@@ -425,3 +365,4 @@ function calculateMaxLot() {
     // Display the Max Lot Size
     document.getElementById("maxLotSize").textContent = `Max Lot Size: ${maxLotSize.toFixed(4)}`;
 }
+
