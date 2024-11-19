@@ -6,13 +6,17 @@
     <title>FNmarkets Calculators</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+<div class="logo">
+    <img src="Artboard 1 copy@3x.png" alt="Company Logo">
+</div>
+
 <body>
     <!-- Top Navigation Bar -->
     <div class="topbar">
         <ul>
             <li onclick="showCalculator('pnlCalculator')">P&L / Pip Calculator</li>
             <li onclick="showCalculator('marginCalculator')">Margin Calculator</li>
-            <li onclick="showCalculator('riskCalculator')">Risk Calculator</li>
+            <li onclick="showCalculator('riskCalculator')">Risk/Reward Calculator</li>
             <li onclick="showCalculator('maxLotCalculator')">Max Lot Calculator</li>
         </ul>
     </div>
@@ -63,6 +67,10 @@
                 </datalist>
             </div>
             <div class="input-group">
+                <label for="manualPrice">Manual Price (Optional):</label>
+                <input type="number" id="manualPrice" placeholder="Enter Price Manually" step="0.01" min="0.01">
+            </div>
+            <div class="input-group">
                 <label for="leverage">Leverage:</label>
                 <input type="number" id="leverage" placeholder="" step="1" min="1">
             </div>
@@ -76,7 +84,7 @@
 
         <!-- Risk Calculator -->
         <div class="calculator" id="riskCalculator" style="display: none;">
-            <h2>Risk Calculator</h2>
+            <h2>Risk/Reward Calculator</h2>
             <div class="input-group">
                 <label for="riskInstrument">Trading Instrument:</label>
                 <input list="pair-list" id="riskInstrument" placeholder="Select Instrument" oninput="updateSamplePrice()">
@@ -92,11 +100,11 @@
                 </select>
             </div>
             <div class="input-group">
-                <label for="riskAmount">Risk Amount:</label>
+                <label for="riskAmount">Risk Amount $:</label>
                 <input type="number" id="riskAmount" placeholder="" step="0.01" min="0.01">
             </div>
             <div class="input-group">
-                <label for="desiredProfit">Desired Profit:</label>
+                <label for="desiredProfit">Desired Profit $:</label>
                 <input type="number" id="desiredProfit" placeholder="" step="0.01" min="0.01">
             </div>
             <div class="input-group">
@@ -121,7 +129,7 @@
                 <datalist id="pair-list"></datalist>
             </div>
             <div class="input-group">
-                <label for="balance">Account Balance:</label>
+                <label for="balance">Used Margin:</label>
                 <input type="number" id="balance" name="balance" required>
             </div>
             <div class="input-group">
