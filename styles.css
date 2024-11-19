@@ -2,7 +2,207 @@
 * {
     box-sizing: border-box;
 }
+/* General Box Sizing */
+* {
+    box-sizing: border-box;
+}
 
+/* Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    background: url('Glow.png') no-repeat center center fixed;
+    background-size: cover;
+    color: #ffffff;
+}
+
+/* Top Navigation Bar */
+.topbar {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.topbar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;  /* Add space between items */
+}
+
+.topbar li {
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: #fff;
+    font-weight: bold;
+}
+
+.topbar li:hover {
+    background-color: #555;
+}
+
+/* Logo Styling */
+.logo {
+    margin: 20px 0; /* Add spacing around the logo */
+    text-align: center; /* Center the logo */
+}
+
+.logo img {
+    max-width: 150px; /* Limit the size of the logo */
+    height: auto; /* Keep the aspect ratio */
+    filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.5)); /* Optional glow effect */
+}
+
+/* Main Content Area */
+.content {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;  /* Space between calculators */
+    justify-content: center;
+}
+
+/* Calculator Container */
+.calculator {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+    width: 100%;
+    max-width: 400px;  /* Fixed width for each calculator */
+    color: #ffffff;
+    margin: 20px 0;  /* Space above and below each calculator */
+}
+
+/* Calculator Heading */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #00cc66;
+    font-size: 24px;
+}
+
+/* Input Group Styling */
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #cccccc;
+}
+
+/* Input and Select Styling */
+input, select {
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid #333;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: background-color 0.3s;
+}
+
+input:focus, select:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Button Styling */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #00cc66;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: bold;
+    margin-top: 10px;  /* Add space above the button */
+    box-shadow: 0 4px 10px rgba(0, 255, 0, 0.5);
+}
+
+button:hover {
+    background-color: #00994d;
+    transform: translateY(-3px);
+}
+
+/* Result Display Area Styling */
+#result, #marginResult, #riskResult, #maxLotResult {
+    margin-top: 20px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #00cc66;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 18px;
+    border: none;
+}
+
+/* Result Value Styling */
+.result-value {
+    color: #00cc66;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}
+
+/* Custom Select Styling */
+.custom-select {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    max-width: 300px;
+    color: #ffffff;
+}
+
+.select-selected {
+    background-color: rgba(0, 255, 0, 0.3);
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.select-options {
+    display: none;
+    position: absolute;
+    background-color: #1a1a1a;
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+    z-index: 1;
+}
+
+.select-options .option {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #1a1a1a;
+    transition: background-color 0.3s;
+}
+
+.select-options .option:hover {
+    background-color: rgba(0, 255, 0, 0.3);
+}
+
+.select-options .option:last-child {
+    border-bottom: none;
+}
 /* Body Styling */
 body {
     font-family: Arial, sans-serif;
