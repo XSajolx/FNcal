@@ -93,25 +93,29 @@ document.addEventListener("DOMContentLoaded", () => {
         pairList.appendChild(option);
     });
 });
-// Function to hide all calculators initially
 function initializeCalculators() {
     const calculators = ['pnlCalculator', 'marginCalculator', 'riskCalculator', 'maxLotCalculator'];
     calculators.forEach(id => {
-        document.getElementById(id).style.display = 'none'; // Hide each calculator
+        document.getElementById(id).style.display = id === 'pnlCalculator' ? 'block' : 'none'; // Show only pnlCalculator initially
     });
 }
-// Function to toggle between calculators
+
 function showCalculator(calculatorId) {
     const calculators = ['pnlCalculator', 'marginCalculator', 'riskCalculator', 'maxLotCalculator'];
     calculators.forEach(id => {
-        document.getElementById(id).style.display = id === calculatorId ? 'block' : 'none';
+        document.getElementById(id).style.display = id === calculatorId ? 'block' : 'none'; // Show only the selected calculator
     });
 }
-function showCalculator(calculatorId) {
-    const calculators = ['pnlCalculator', 'marginCalculator', 'riskCalculator', 'maxLotCalculator'];
-    calculators.forEach(id => {
-        document.getElementById(id).style.display = id === calculatorId ? 'block' : 'none';
-    });
+function updateInstrumentData() {
+    const instrument = document.getElementById("riskInstrument").value.toUpperCase();
+
+    if (instruments[instrument]) {
+        const { pipValue, conversionRate } = instruments[instrument];
+        console.log(`Instrument: ${instrument}, Pip Value: ${pipValue}, Conversion Rate: ${conversionRate}`);
+        // Optionally display data or log further
+    } else {
+        console.warn("Instrument not found.");
+    }
 }
 // Initialize calculators on page load to hide them initially
 document.addEventListener("DOMContentLoaded", initializeCalculators);
@@ -153,7 +157,7 @@ const instruments = {
     "GBPAUD": { pipValue: 6.48, conversionRate: 10000, type: "forex" },
     "GBPCAD": { pipValue: 5.90, conversionRate: 10000, type: "forex" },
     "GBPCHF": { pipValue: 11.08, conversionRate: 10000, type: "forex" },
-    "GBPJPY": { pipValue: 10.00, conversionRate: 100, type: "forex" },
+    "GBPJPY": { pipValue: 6.48, conversionRate: 100, type: "forex" },
     "GBPNZD": { pipValue: 5.90, conversionRate: 10000, type: "forex" },
     "GBPSGD": { pipValue: 7.36, conversionRate: 10000, type: "forex" },
     "GBPUSD": { pipValue: 10.00, conversionRate: 10000, type: "forex" },
@@ -215,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 function calculatePip() {
-    const position = document.getElementById("position").value;
+    const position = document.getElementById("pnlPosition").value;
     const instrument = document.getElementById("instrument").value.toUpperCase();
     const entryPrice = parseFloat(document.getElementById("entryPrice").value);
     const exitPrice = parseFloat(document.getElementById("exitPrice").value);
@@ -260,6 +264,26 @@ document.addEventListener("DOMContentLoaded", () => {
         pairList.appendChild(option);
     });
 });
+function updateInstrumentData() {
+    const instrument = document.getElementById("riskInstrument").value.toUpperCase();
+
+    // Check if the instrument exists in the instruments object
+    if (instruments[instrument]) {
+        const { pipValue, conversionRate } = instruments[instrument];
+
+        // Debugging: Log the fetched values
+        console.log(`Instrument: ${instrument}`);
+        console.log(`Pip Value: ${pipValue}`);
+        console.log(`Conversion Rate: ${conversionRate}`);
+
+        // Optionally, you could display these values in the UI
+        //document.getElementById("slAmount").textContent = `Pip Value: ${pipValue}`;
+        //document.getElementById("tpAmount").textContent = `Conversion Rate: ${conversionRate}`;
+    } else {
+        // Handle the case where the instrument is not valid
+        console.warn("Selected instrument not found.");
+    }
+}
 function calculateMargin() {
     // Retrieve inputs from the DOM
     const instrument = document.getElementById("marginInstrument").value.toUpperCase();
@@ -363,6 +387,51 @@ function calculateMaxLot() {
     }
 
     // Display the Max Lot Size
-    document.getElementById("maxLotSize").textContent = `Max Lot Size: ${maxLotSize.toFixed(4)}`;
+    document.getElementById("maxLotSize").textContent = `Max Lot Size: ${maxLotSize.toFixed(2)}`;
 }
+function calculateRisk1() {
+    // Clear previous results
+    document.getElementById("slAmount").textContent = "";
+    document.getElementById("tpAmount").textContent = "";
 
+    // Fetch updated inputs
+    const position = document.getElementById("riskPosition").value;
+    const riskAmountValue = parseFloat(document.getElementById("riskAmount").value);
+    const instrument = document.getElementById("riskInstrument").value.toUpperCase();
+    const desiredProfitValue = parseFloat(document.getElementById("desiredProfit").value);
+    const entryPriceValue = parseFloat(document.getElementById("entryPrice1").value);
+    const lotSizeValue = parseFloat(document.getElementById("lotSize").value);
+
+    // Debug log to ensure values are updated
+    console.log("Selected position:", position);
+
+    // Validate inputs
+    function validateInputs(inputs) {
+        return inputs.every(input => typeof input === 'number' && !isNaN(input) && input > 0);
+    }
+
+    if (!validateInputs([riskAmountValue, desiredProfitValue, entryPriceValue, lotSizeValue])) {
+        document.getElementById("slAmount").textContent = "Invalid inputs. Please provide valid numeric values.";
+        document.getElementById("tpAmount").textContent = "";
+        return;
+    }
+
+    if (!instruments[instrument]) {
+        document.getElementById("slAmount").textContent = "Invalid instrument. Please select a valid trading instrument.";
+        document.getElementById("tpAmount").textContent = "";
+        return;
+    }
+
+    // Retrieve pipValue and conversionRate dynamically
+    const { pipValue, conversionRate } = instruments[instrument];
+    const riskMultiplier = position === "buy" ? -1 : 1;
+
+    // Calculate Stop Loss (SL) and Take Profit (TP)
+    const stopLoss = entryPriceValue + riskMultiplier * (riskAmountValue / (lotSizeValue * pipValue)) / conversionRate;
+    const takeProfit = entryPriceValue - riskMultiplier * (desiredProfitValue / (lotSizeValue * pipValue)) / conversionRate;
+
+    // Display results with dynamic precision
+    const precision = entryPriceValue.toString().split(".")[1]?.length || 2;
+    document.getElementById("slAmount").textContent = `Stop Loss (SL): ${stopLoss.toFixed(precision)}`;
+    document.getElementById("tpAmount").textContent = `Take Profit (TP): ${takeProfit.toFixed(precision)}`;
+}
