@@ -26,16 +26,16 @@
         <div class="calculator" id="pnlCalculator">
             <h2>P&L / Pip Calculator</h2>
             <div class="input-group">
-                <label for="position">Position:</label>
-                <select id="position">
-                    <option value="buy">Buy</option>
-                    <option value="sell">Sell</option>
-                </select>
-            </div>
-            <div class="input-group">
                 <label for="instrument">Instrument:</label>
                 <input type="text" id="instrument" placeholder="Search Instrument..." list="instrument-list">
                 <datalist id="instrument-list"></datalist>
+            </div>
+            <div class="input-group">
+                <label for="pnlPosition">Position:</label>
+                <select id="pnlPosition"> <!-- Unique ID -->
+                    <option value="buy">Buy</option>
+                    <option value="sell">Sell</option>
+                </select>
             </div>
             <div class="input-group">
                 <label for="entryPrice">Entry Price:</label>
@@ -62,7 +62,7 @@
             <!-- Instrument Input -->
             <div class="input-group">
                 <label for="marginInstrument">Instrument:</label>
-                <input list="pair-list" id="marginInstrument" placeholder="" autocomplete="off">
+                <input list="pair-list" id="marginInstrument" placeholder="Select Instrument" autocomplete="off">
                 <datalist id="pair-list">
                     <!-- Options populated dynamically by JavaScript -->
                 </datalist>
@@ -92,54 +92,56 @@
             <!-- Result Display -->
             <p id="marginAmount"></p>
         </div>
-        <!-- Risk Calculator -->
-        <div class="calculator" id="riskCalculator" style="display: none;">
-            <h2>Risk/Reward Calculator</h2>
-            <div class="input-group">
-                <label for="riskInstrument">Trading Instrument:</label>
-                <input list="pair-list" id="riskInstrument" placeholder="Select Instrument" oninput="updateSamplePrice()">
-                <datalist id="pair-list">
-                    <!-- Options populated dynamically -->
-                </datalist>
-            </div>
-            <div class="input-group">
-                <label for="position">Position:</label>
-                <select id="position">
-                    <option value="buy">Buy</option>
-                    <option value="sell">Sell</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label for="riskAmount">Risk Amount $:</label>
-                <input type="number" id="riskAmount" placeholder="" step="0.01" min="0.01">
-            </div>
-            <div class="input-group">
-                <label for="desiredProfit">Desired Profit $:</label>
-                <input type="number" id="desiredProfit" placeholder="" step="0.01" min="0.01">
-            </div>
-            <div class="input-group">
-                <label for="entryPrice1">Entry Price:</label>
-                <input type="number" id="entryPrice1" placeholder="" step="0.01" min="0.01">
-            </div>
-            <div class="input-group">
-                <label for="lotSize">Lot Size:</label>
-                <input type="number" id="lotSize" placeholder="" step="0.01" min="0.01">
-            </div>
-            <button onclick="calculateRisk()">Calculate SL and TP</button>
-            <p id="slAmount"></p>
-            <p id="tpAmount"></p>
-        </div>
-
+<!-- Risk Calculator -->
+<div class="calculator" id="riskCalculator">
+    <h2>Risk/Reward Calculator</h2>
+    <div class="input-group">
+        <label for="riskInstrument">Trading Instrument:</label>
+        <input list="pair-list" id="riskInstrument" placeholder="Select Instrument" oninput="updateInstrumentData()">
+        <datalist id="pair-list">
+            <!-- Options populated dynamically -->
+        </datalist>
+    </div>
+    
+    <div class="input-group">
+        <label for="riskPosition">Position:</label>
+        <select id="riskPosition"> <!-- Unique ID -->
+            <option value="buy">Buy</option>
+            <option value="sell">Sell</option>
+        </select>
+    </div>
+    <div class="input-group">
+        <label for="riskAmount">Risk Amount $:</label>
+        <input type="number" id="riskAmount" placeholder="" step="0.01" min="0.01">
+    </div>
+    <div class="input-group">
+        <label for="desiredProfit">Desired Profit $:</label>
+        <input type="number" id="desiredProfit" placeholder="" step="0.01" min="0.01">
+    </div>
+    <div class="input-group">
+        <label for="entryPrice1">Entry Price:</label>
+        <input type="number" id="entryPrice1" placeholder="" step="0.01" min="0.01">
+    </div>
+    <div class="input-group">
+        <label for="lotSize">Lot Size:</label>
+        <input type="number" id="lotSize" placeholder="" step="0.01" min="0.01">
+    </div>
+    <button onclick="calculateRisk1()">Calculate SL and TP</button>
+    <div id="results">
+        <p id="slAmount"></p>
+        <p id="tpAmount"></p>
+    </div>
+</div>
         <!-- Max Lot Calculator -->
         <div class="calculator" id="maxLotCalculator" style="display: none;">
             <h2>Max Lot Calculator</h2>
             <div class="input-group">
                 <label for="pair">Choose a Pair:</label>
-                <input type="text" id="pair" placeholder="Search for a pair..." list="pair-list">
+                <input type="text" id="pair" placeholder="Select Instrument" list="pair-list">
                 <datalist id="pair-list"></datalist>
             </div>
             <div class="input-group">
-                <label for="balance">Used Margin:</label>
+                <label for="balance">Margin to use:</label>
                 <input type="number" id="balance" name="balance" required>
             </div>
             <div class="input-group">
