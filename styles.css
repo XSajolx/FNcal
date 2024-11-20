@@ -19,7 +19,15 @@ body {
     color: black;
 }
 
-
+/* Dropdown Options Styling */
+select option {
+    background-color: #000000; /* Black background for options */
+    color: #ffffff; /* White text for visibility */
+}
+select option:hover {
+    background-color: rgba(0, 255, 0, 0.5); /* Green background on hover */
+    color: #000000; /* Black text for contrast */
+}
 /* Top Navigation Bar */
 .topbar {
     width: 100%;
@@ -48,6 +56,7 @@ body {
 
 .topbar li:hover {
     background-color: #555;
+    color: #000000;
 }
 
 /* Logo Styling */
@@ -141,6 +150,7 @@ button {
 button:hover {
     background-color: #00994d;
     transform: translateY(-3px);
+    color: #000000;
 }
 
 /* Result Display Area Styling */
@@ -199,8 +209,20 @@ button:hover {
 
 .select-options .option:hover {
     background-color: rgba(0, 255, 0, 0.3);
+    color: #000000;
 }
 
 .select-options .option:last-child {
     border-bottom: none;
+}
+.input-group {
+    position: relative;
+    z-index: 5;
+}
+
+#position {
+    position: relative;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.1); /* Ensure background visibility */
+    color: white; /* Ensure text is visible */
 }
