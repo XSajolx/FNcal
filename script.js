@@ -180,7 +180,7 @@ const instruments = {
     "USDSGD": { pipValue: 6.36, conversionRate: 10000, type: "forex" },
     "USDTRY": { pipValue: 0.35, conversionRate: 10000, type: "forex" },
     "USDZAR": { pipValue: 0.53, conversionRate: 10000, type: "forex" },
-    "ZARJPY": { pipValue: 6.61, conversionRate: 100, type: "forex" },
+    "ZARJPY": { pipValue: 6.61, conversionRate: 1000, type: "forex" },
     "NZDUSD": { pipValue: 10.00, conversionRate: 10000, type: "forex" },
     "USDHKD": { pipValue: 1.28, conversionRate: 10000, type: "forex" },
     "USDSEK": { pipValue: 10.80, conversionRate: 10000, type: "forex" },
