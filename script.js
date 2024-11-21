@@ -234,7 +234,7 @@ function calculatePip() {
     const priceDifference = Math.abs(entryPrice - exitPrice) * conversionRate;
     const pnl = priceDifference * lot * pipValue;
 
-    let resultLabel = (position === "sell" && exitPrice < entryPrice) || (position === "buy" && exitPrice > entryPrice) ? "Profit:$" : "Loss:$";
+    let resultLabel = (position === "sell" && exitPrice < entryPrice) || (position === "buy" && exitPrice > entryPrice) ? "Profit: $" : "Loss: $";
     let differenceLabel = type === "index" ? "Point Difference: " : "Pip Difference: ";
     document.getElementById("pipDifference").textContent = differenceLabel + priceDifference.toFixed(2);
     document.getElementById("profitLoss").textContent = resultLabel + Math.abs(pnl.toFixed(2));
